@@ -38,8 +38,13 @@ class courseForms(forms.ModelForm):
 
 class studentForm(forms.ModelForm):
     class Meta:
-        fields = ["Student_name","Contact_Number","Password"]
+        fields = ["Student_name","Contact_Number","Password","email"]
         model = studentModel
+
+#class stud_courseForm(forms.ModelForm):
+ #   class Meta:
+  #      fields = ["Student_Course"]
+   #     model = studentModel,courseModel
 
     #Student_Course = forms.CharField(widget=forms.)
 

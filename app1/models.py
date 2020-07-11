@@ -15,4 +15,9 @@ class studentModel(models.Model):
     Contact_Number = models.IntegerField()
     email = models.EmailField(max_length=20)
     Password = models.CharField(max_length=20)
-    Student_Course = models.ManyToManyField(courseModel)
+    #Student_Course = models.ManyToManyField(courseModel)
+
+class stud_course(models.Model):
+    id = models.AutoField(primary_key=True)
+    sid = models.IntegerField()
+    cid = models.IntegerField()

@@ -20,21 +20,21 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 <body>
 <div class="container-sm">
- {% for x in stud %}
 
-<h1 class="title">Welcome{{ x.Student_name }}
-</h1>
- {% endfor %}
+
+<h1 class="title">Welcome {% for x in data %} {{ x.Student_name }}{% endfor %}</h1>
+
+
 </div>
 <div class="container-sm">
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <a class="navbar-brand" href="{% url 'student_welcome' %}">Home </a>
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link" href="{% url 'entrol_course' %}">Entrol the Course<span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="{% url 'entrol_course' %}?no={% for x in data %}{{ x.sid }}{% endfor %}">Entrol the Course<span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="{% url 'view_entrolled_courses' %}">View All Entrol Courses</a>
+        <a class="nav-link" href="{% url 'view_entrolled_courses' %}?no={% for x in data %}{{ x.sid }}{% endfor %}">View All Entrol Courses</a>
       </li>
         <li class="nav-item">
         <a class="nav-link" href="{% url 'cancel_entrolled_courses' %}">Cancel Entrol Courses</a>
@@ -48,12 +48,6 @@
 <div>
     {% block student %}
     {% endblock %}
-</div>
-<div>
-    {% for x in data %}
-    <h1>{{ x.sid }}</h1>
-    <h2>{{ x.Student_name }}</h2>
-    {% endfor %}
 </div>
 </body>
 </html>

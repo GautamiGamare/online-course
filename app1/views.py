@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect
 from django.views.generic import UpdateView
 from django.http import HttpResponse
-from app1.models import courseModel,studentModel
+from app1.models import courseModel,studentModel,stud_course
 from app1.courseForm import courseForms,studentForm
+from django.db.utils import IntegrityError
+
 
 def admin_login(req):
     return render(req, 'admin_login.html')
@@ -59,23 +61,6 @@ def student_login(req):
 def student_regis(req):
     return render(req,'student_regis.html',{'form':studentForm()})
 
-def student_valid(req):
-    uname = req.POST.get('username')
-    pas = req.POST.get('pass')
-    a = studentModel.objects.filter(Student_name=uname)
-    b = studentModel.objects.filter(Password=pas)
-    if a and b:
-        #res = studentModel.objects.filter(Student_name=uname).all()
-        # print(res)
-        return render(req, 'student_welcome.html')
-    else:
-        return render(req, 'student_login.html', {'error': 'Username or Password is incorrect'})
-    return None
-
-def student_welcome(req):
-    res = studentModel.objects.all()
-    return render(req,'student_welcome.html',{"stud":res})
-
 def save_student(req):
     sf = studentForm(req.POST)
     if sf.is_valid():
@@ -88,27 +73,36 @@ def save_student(req):
         return render(req, 'student_regis.html', {'form': sf})
 
 def student_welcome(req):
-    #nm = studentModel.objects.all()
-    return render(req,'student_welcome.html')
+    uname = req.POST.get('username')
+    pas = req.POST.get('pass')
+    if studentModel.objects.filter(Student_name=uname) and studentModel.objects.filter(Password=pas):
+        res = studentModel.objects.filter(Student_name=uname).only('Student_name')
+        #sid = studentModel.objects.get('sid')
+        print(res)
+        return render(req, 'student_welcome.html',{'data':res})
+    else:
+        return render(req, 'student_login.html', {'error': 'Username or Password is incorrect'})
+
 
 def entrol_course(req):
+    sid = req.GET.get('no')
+    s = studentModel.objects.filter(sid=sid).all()
     res = courseModel.objects.all()
-    return render(req, 'entrol_course.html', {'data': res})
+    return render(req, 'entrol_course.html', {'data': res,'sid':s})
 
-def view_entrolled_courses(req):
-    return None
-
-def cancel_entrolled_courses(req):
-    return None
 
 def entrol(req):
     num =req.GET.get('no')
+    sid= req.GET.get('sid')
+    sm=stud_course(sid=sid,cid=num).save()
+    return redirect('student_welcome')
 
-    id = studentModel.objects.only('sid')
-    #for x in id:
-     #   print(x.sid)
-    #print("getting num ",num)
-    #print(sid)
-    #print(sid)
-    res =studentModel.Student_Course(num,)
-    return HttpResponse(id)
+def view_entrolled_courses(req):
+    sid = req.GET.get('no')
+    sc= stud_course.objects.filter(sid=sid).only('cid')
+    #course=courseModel.objects.filter(cid=sc).all()
+    #print(sc)
+    return render(req,'view_entrolled_courses.html',{'data':sc})
+
+def cancel_entrolled_courses(req):
+    return None

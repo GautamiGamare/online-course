@@ -1,0 +1,21 @@
+{% include 'student_welcome.html' %}
+{% block student %}
+<table class="table">
+<tr>
+    <th>Course number</th>
+    <th>Student ID</th>
+</tr>
+    {% for x in data %}
+<tr>
+    <th>{{ x.cid }}</th>
+    <th>{{ x.sid }}</th>
+</tr>
+
+{% endfor %}
+</table>
+  <!--  {% for x in data %}
+    {% for y in crs %}
+    <h3>{{ x.cid }}{{y.course_name }}</h3>
+    {% endfor %}
+    {% endfor %}-->
+{% endblock %}

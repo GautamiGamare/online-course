@@ -11,16 +11,20 @@
     <th>Duration</th>
     <th>Entroll</th>
 </tr>
+
 {% for x in data %}
-<tr>
-<td>{{ x.course_name }}</td>
+<tr><td>{{ x.course_name }}</td>
 <td>{{ x.faculty_name }}</td>
 <td>{{ x.starting_date }}</td>
 <td>{{ x.course_time }}</td>
 <td>{{ x.fee }}</td>
 <td>{{ x.Duration }}</td>
-<td><a href="{% url 'entrol' %}?no={{ x.cid }}"><img src="{% static 'images/select.jpg' %}" height="30px" width="30px"> </a></td>
+<td><a href="{% url 'entrol' %}?no={{ x.cid }}&sid={% for x in sid %}{{ x.sid }}{% endfor %}"><img src="{% static 'images/select.jpg' %}" height="30px" width="30px"> </a></td>
 </tr>
 {% endfor %}
 </table>
+    {% if msg %}
+    <h4>{{ msg }}</h4>
+    {% endif %}
+
 {% endblock %}

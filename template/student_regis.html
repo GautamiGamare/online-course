@@ -1,0 +1,13 @@
+{% include 'student.html' %}
+{% block student %}
+<form action="{% url 'save_student' %}" method="post">
+{% csrf_token %}
+<table class="table">
+{{ form }}
+</table>
+    <center>
+<button type="submit" class="btn btn-primary" style="alignment: center">Register</button>
+</center>
+</form>
+
+{% endblock %}

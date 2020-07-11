@@ -1,0 +1,11 @@
+{% include 'admin_welcome.html' %}
+{% load static %}
+{% block course %}
+<form method="post">
+{% csrf_token %}
+    <table class="table">
+        {{ form }}
+    </table>
+<button type="submit">Submit</button>
+</form>
+{% endblock %}

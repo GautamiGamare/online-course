@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome admin</title>
+</head>
+<style>
+    body{
+        background-color: #142850;
+        color: #dae1e7;
+    }
+    .title{
+        text-align: center;
+        text-shadow: 2px 5px 5px #888888;
+        padding: 20px;
+        margin: 10px;
+        font-size: 30px;
+    }
+</style>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+<body>
+<div class="container-sm">
+<h1 class="title">Welcome Mr./Miss {{ name }} </h1>
+</div>
+<div class="container-sm">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="{% url 'admin_login' %}">Logout</a>
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="{% url 'add_new_class' %}">Schedule New Classes<span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'view_classes' %}">View All Schedule Classes</a>
+      </li>
+    </ul>
+</nav>
+</div>
+<div>
+    {% block course %}
+    {% endblock %}
+</div>
+</body>
+</html>

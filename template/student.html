@@ -1,0 +1,28 @@
+{% include 'student_main.html' %}
+{% load static %}
+{% block student %}
+<div class="container">
+<div class="row">
+    <div class="col-4">
+        <div>
+            <img src="{% static 'images/admin2.png' %}" height="200px" width="200px" style="margin-top: 20px">
+        </div>
+    </div>
+
+    <div class="col-8">
+        {% for x in data %}
+
+        <div class="card" style="width: 18rem; padding: 10px;margin-top: 20px;">
+  <h2 style="text-align: center">{{ x.course_name }}</h2>
+  <div class="card-body">
+    <h4 class="card-title">Faculty : {{ x.faculty_name }}</h4>
+    <h4>Date : {{ x.starting_date }}</h4>
+    <h4>Fees : {{ x.fee }}</h4>
+  </div>
+</div>
+        {% endfor %}
+    </div>
+</div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,26 @@
+{% include 'student_welcome.html' %}
+{% load static %}
+{% block student %}
+<table class="table">
+<tr>
+    <th>Course Name</th>
+    <th>Faculty</th>
+    <th>Date</th>
+    <th>Time</th>
+    <th>Fees</th>
+    <th>Duration</th>
+    <th>Entroll</th>
+</tr>
+{% for x in data %}
+<tr>
+<td>{{ x.course_name }}</td>
+<td>{{ x.faculty_name }}</td>
+<td>{{ x.starting_date }}</td>
+<td>{{ x.course_time }}</td>
+<td>{{ x.fee }}</td>
+<td>{{ x.Duration }}</td>
+<td><a href="{% url 'entrol' %}?no={{ x.cid }}"><img src="{% static 'images/select.jpg' %}" height="30px" width="30px"> </a></td>
+</tr>
+{% endfor %}
+</table>
+{% endblock %}

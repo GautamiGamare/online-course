@@ -37,7 +37,7 @@
         <a class="nav-link" href="{% url 'view_entrolled_courses' %}?no={% for x in data %}{{ x.sid }}{% endfor %}">View All Entrol Courses</a>
       </li>
         <li class="nav-item">
-        <a class="nav-link" href="{% url 'cancel_entrolled_courses' %}">Cancel Entrol Courses</a>
+        <a class="nav-link" href="{% url 'cancel_entrolled_courses' %}?no={% for x in data %}{{ x.sid }}{% endfor %}">Cancel Entrol Courses</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="{% url 'student' %}">Logout</a>

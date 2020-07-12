@@ -43,5 +43,13 @@
         </library>
       </libraries>
     </data-source>
+    <data-source source="LOCAL" name="Django default" uuid="d892d2ac-a7e2-47cb-8d13-a3788abbedca">
+      <driver-ref>sqlite.xerial</driver-ref>
+      <synchronize>true</synchronize>
+      <imported>true</imported>
+      <remarks>$PROJECT_DIR$/proj1/settings.py</remarks>
+      <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
+      <jdbc-url>jdbc:sqlite:E:\REST API\Assignment2\Git-files\online course register\online-course\courses1.sqlite3</jdbc-url>
+    </data-source>
   </component>
 </project>

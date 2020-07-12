@@ -66,11 +66,12 @@ def save_student(req):
     if sf.is_valid():
         print('valid')
         sf.save()
-        # res = Stocker.objects.all()
         return redirect('student_login')
     else:
         print('Invalid')
         return render(req, 'student_regis.html', {'form': sf})
+#=====================================================================================================
+#=====================================================================================================
 
 def student_welcome(req):
     uname = req.POST.get('username')
@@ -83,26 +84,37 @@ def student_welcome(req):
     else:
         return render(req, 'student_login.html', {'error': 'Username or Password is incorrect'})
 
-
 def entrol_course(req):
     sid = req.GET.get('no')
     s = studentModel.objects.filter(sid=sid).all()
     res = courseModel.objects.all()
     return render(req, 'entrol_course.html', {'data': res,'sid':s})
 
-
 def entrol(req):
     num =req.GET.get('no')
     sid= req.GET.get('sid')
-    sm=stud_course(sid=sid,cid=num).save()
-    return redirect('student_welcome')
+    stud_course(sid=sid,cid=num).save()
+    sc = stud_course.objects.filter(sid=sid).only('cid')
+    #sc = stud_course.objects.filter(sid=sid).only('cid')
+    #coures = courseModel.objects.all()
+    return render(req,'entrol_course.html',{'msg':'Entrolled Successfully','sid':sid,'data':sc})
 
 def view_entrolled_courses(req):
     sid = req.GET.get('no')
-    sc= stud_course.objects.filter(sid=sid).only('cid')
-    #course=courseModel.objects.filter(cid=sc).all()
-    #print(sc)
-    return render(req,'view_entrolled_courses.html',{'data':sc})
+    sc = stud_course.objects.filter(sid=sid).only('cid')
+    coures = courseModel.objects.all()
+    return render(req,'view_entrolled_courses.html',{'data':sc,'course':coures,'sid':sid})
 
 def cancel_entrolled_courses(req):
-    return None
+    sid = req.GET.get('no')
+    sc = stud_course.objects.filter(sid=sid).only('cid')
+    coures = courseModel.objects.all()
+    return render(req, 'cancel_entrolled_courses.html', {'data': sc, 'course': coures,"sid":sid})
+
+def delete_course(req):
+    num = req.GET.get('del')
+    sid = req.GET.get('sid')
+    stud_course.objects.filter(cid=num).delete()
+    sc = stud_course.objects.filter(sid=sid).only('cid')
+    #return render(req,'view_entrolled_courses.html',{'sid':sid,'data':sc})
+    return redirect('cancel_entrolled_courses')

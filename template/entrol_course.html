@@ -1,6 +1,12 @@
 {% include 'student_welcome.html' %}
 {% load static %}
 {% block student %}
+    {% if msg %}
+    <h4>{{ msg }}</h4>
+        {%  else %}
+
+
+
 <table class="table">
 <tr>
     <th>Course Name</th>
@@ -22,9 +28,7 @@
 <td><a href="{% url 'entrol' %}?no={{ x.cid }}&sid={% for x in sid %}{{ x.sid }}{% endfor %}"><img src="{% static 'images/select.jpg' %}" height="30px" width="30px"> </a></td>
 </tr>
 {% endfor %}
-</table>
-    {% if msg %}
-    <h4>{{ msg }}</h4>
-    {% endif %}
+{% endif %}
 
+</table>
 {% endblock %}

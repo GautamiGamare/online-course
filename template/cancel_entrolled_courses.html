@@ -1,13 +1,11 @@
 {% include 'student_welcome.html' %}
+{% load static %}
 {% block student %}
 <table class="table">
 <tr>
     <th>Course number</th>
     <th>Course Name</th>
-    <th>Faculty Name</th>
-    <th>Starting Date</th>
-    <th>Course Time</th>
-    <th>Fee</th>
+    <th>Delete</th>
 </tr>
     {% for x in course %}
     {% for y in data %}
@@ -15,10 +13,7 @@
 <tr>
     <th>{{ x.cid }}</th>
     <th>{{ x.course_name }}</th>
-    <th>{{ x.faculty_name }}</th>
-    <th>{{ x.starting_date }}</th>
-    <th>{{ x.course_time }}</th>
-    <th>{{ x.fee }}</th>
+    <th><a href="{% url 'delete_course' %}?del={{ y.cid }}&sid ={{ sid }}"><img src="{% static 'images/delete.jpg' %}" width="30px" height="30px"></a> </th>
 </tr>
     {% endif %}
     {% endfor %}

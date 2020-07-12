@@ -39,6 +39,6 @@ urlpatterns = [
     path('view_entrolled_courses/',views.view_entrolled_courses,name='view_entrolled_courses'),
     path('cancel_entrolled_courses/',views.cancel_entrolled_courses,name='cancel_entrolled_courses'),
     path('entrol/',views.entrol,name='entrol'),
-    #path('student_valid/',views.student_valid,name='student_valid'),
+    path('delete_course/',views.delete_course,name='delete_course'),
 
 ]

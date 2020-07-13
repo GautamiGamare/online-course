@@ -40,5 +40,6 @@ urlpatterns = [
     path('cancel_entrolled_courses/',views.cancel_entrolled_courses,name='cancel_entrolled_courses'),
     path('entrol/',views.entrol,name='entrol'),
     path('delete_course/',views.delete_course,name='delete_course'),
+    path('contact/',views.contact,name='contact'),
 
 ]

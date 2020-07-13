@@ -11,6 +11,9 @@
     <title>Student Page</title>
   </head>
   <style>
+      body{
+          background-color: #d6e6f2;
+      }
       .title{
         text-align: center;
         text-shadow: 2px 5px 5px #888888;
@@ -35,7 +38,7 @@
         <a class="nav-link" href="#">Search</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Contact US</a>
+        <a class="nav-link" href="{% url 'contact' %}">Contact US</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="{% url 'main'  %}">Home</a>

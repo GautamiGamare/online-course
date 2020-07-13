@@ -3,9 +3,9 @@
 {% block course %}
 <table class="table">
 <tr>
-    <th style="font-size: 20px; padding: 50px; text-align: center" colspan="9">All Course Details</th>
+    <th style="font-size: 30px; padding: 50px; text-align: center;color: #2d4059 " colspan="9" class="thead-dark">All Course Details</th>
 </tr>
-<tr>
+<tr style="font-size: 20px;">
     <th>Course ID</th>
     <th>Course Name</th>
     <th>Faculty Name</th>
@@ -22,9 +22,9 @@
     <th>{{ x.course_name }}</th>
     <th>{{ x.faculty_name }}</th>
     <th>{{ x.starting_date }}</th>
-    <th>{{ x.course_time }}</th>
-    <th>{{ x.fee }}</th>
-    <th>{{ x.Duration }}</th>
+    <th>{{ x.course_time }} am</th>
+    <th>{{ x.fee }} RS</th>
+    <th>{{ x.Duration }} days</th>
     <th><a href="{% url 'update' x.cid %}"><img src="{% static 'images/update.jpg' %}" height="30px" width="30px"></a></th>
     <th><a href="{% url 'delete' %}?no={{ x.cid }}"><img src="{% static 'images/delete.jpg' %}" width="30px" height="30px"></a> </th>
 

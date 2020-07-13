@@ -53,7 +53,8 @@ def delete(req):
 #---------------------------STUDENT-----------------------------
 
 def student(req):
-    return render(req,'student.html')
+    data = courseModel.objects.all()
+    return render(req,'student.html',{'data':data})
 
 def student_login(req):
     return render(req,'student_login.html')
@@ -70,6 +71,9 @@ def save_student(req):
     else:
         print('Invalid')
         return render(req, 'student_regis.html', {'form': sf})
+
+def contact(req):
+    return render(req,'contact.html')
 #=====================================================================================================
 #=====================================================================================================
 
@@ -86,28 +90,29 @@ def student_welcome(req):
 
 def entrol_course(req):
     sid = req.GET.get('no')
-    s = studentModel.objects.filter(sid=sid).all()
+    sc = stud_course.objects.all()
+    #s = studentModel.objects.filter(sid=sid).all()
     res = courseModel.objects.all()
-    return render(req, 'entrol_course.html', {'data': res,'sid':s})
+    return render(req, 'entrol_course.html', {'data': res,'sid':sc})
 
 def entrol(req):
     num =req.GET.get('no')
     sid= req.GET.get('sid')
     stud_course(sid=sid,cid=num).save()
     sc = stud_course.objects.filter(sid=sid).only('cid')
-    #sc = stud_course.objects.filter(sid=sid).only('cid')
-    #coures = courseModel.objects.all()
     return render(req,'entrol_course.html',{'msg':'Entrolled Successfully','sid':sid,'data':sc})
 
 def view_entrolled_courses(req):
     sid = req.GET.get('no')
-    sc = stud_course.objects.filter(sid=sid).only('cid')
+    ##sc = stud_course.objects.filter(sid=sid).only('cid')
+    sc = stud_course.objects.all()
     coures = courseModel.objects.all()
     return render(req,'view_entrolled_courses.html',{'data':sc,'course':coures,'sid':sid})
 
 def cancel_entrolled_courses(req):
     sid = req.GET.get('no')
-    sc = stud_course.objects.filter(sid=sid).only('cid')
+    #sc = stud_course.objects.filter(sid=sid).only('cid')
+    sc = stud_course.objects.all()
     coures = courseModel.objects.all()
     return render(req, 'cancel_entrolled_courses.html', {'data': sc, 'course': coures,"sid":sid})
 

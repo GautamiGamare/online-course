@@ -1,12 +1,9 @@
 {% include 'student_welcome.html' %}
 {% load static %}
 {% block student %}
-    {% if msg %}
-    <h4>{{ msg }}</h4>
-        {%  else %}
-
-
-
+    {% for x in messages %}
+    <h4 style="padding: 50px; font-size: 25px; color: #1d2124;">{{ x }}</h4>
+        {%  endfor %}
 <table class="table">
 <tr>
     <th>Course Name</th>
@@ -25,10 +22,8 @@
 <td>{{ x.course_time }}</td>
 <td>{{ x.fee }}</td>
 <td>{{ x.Duration }}</td>
-<td><a href="{% url 'entrol' %}?no={{ x.cid }}&sid={% for x in sid %}{{ x.sid }}{% endfor %}"><img src="{% static 'images/select.jpg' %}" height="30px" width="30px"> </a></td>
+<td><a href="{% url 'entrol' %}?no={{ x.cid }}&sid={{ request.session.sid }}"><img src="{% static 'images/select.jpg' %}" height="30px" width="30px"> </a></td>
 </tr>
 {% endfor %}
-{% endif %}
-
 </table>
 {% endblock %}

@@ -1,5 +1,8 @@
 {% include 'student_welcome.html' %}
 {% block student %}
+{% if not data %}
+<h4>No Courses are entrolled</h4>
+    {% else %}
 <table class="table">
 <tr>
     <th>Course number</th>
@@ -9,9 +12,7 @@
     <th>Course Time</th>
     <th>Fee</th>
 </tr>
-    {% for x in course %}
-    {% for y in data %}
-        {% if x.cid == y.cid %}
+{% for x in data %}
 <tr>
     <th>{{ x.cid }}</th>
     <th>{{ x.course_name }}</th>
@@ -20,9 +21,7 @@
     <th>{{ x.course_time }}</th>
     <th>{{ x.fee }}</th>
 </tr>
-    {% endif %}
-    {% endfor %}
-    {% endfor %}
+ {% endfor %}
 </table>
-
+{% endif %}
 {% endblock %}

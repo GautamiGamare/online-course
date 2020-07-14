@@ -4,7 +4,8 @@ from django.http import HttpResponse
 from app1.models import courseModel,studentModel,stud_course
 from app1.courseForm import courseForms,studentForm
 from django.db.utils import IntegrityError
-
+from django.db.models import Q
+from django.contrib import messages
 
 def admin_login(req):
     return render(req, 'admin_login.html')
@@ -80,46 +81,57 @@ def contact(req):
 def student_welcome(req):
     uname = req.POST.get('username')
     pas = req.POST.get('pass')
-    if studentModel.objects.filter(Student_name=uname) and studentModel.objects.filter(Password=pas):
-        res = studentModel.objects.filter(Student_name=uname).only('Student_name')
-        #sid = studentModel.objects.get('sid')
-        print(res)
-        return render(req, 'student_welcome.html',{'data':res})
-    else:
+    course = courseModel.objects.all()
+    try:
+        result = studentModel.objects.get(Q(Student_name=uname,Password=pas))
+        req.session['sid']=result.sid
+        return render(req, 'student_welcome.html',{'data':result,'course':course})
+    except studentModel.DoesNotExist:
         return render(req, 'student_login.html', {'error': 'Username or Password is incorrect'})
 
 def entrol_course(req):
-    sid = req.GET.get('no')
-    sc = stud_course.objects.all()
-    #s = studentModel.objects.filter(sid=sid).all()
     res = courseModel.objects.all()
-    return render(req, 'entrol_course.html', {'data': res,'sid':sc})
+    return render(req, 'entrol_course.html', {'data': res})
 
 def entrol(req):
     num =req.GET.get('no')
     sid= req.GET.get('sid')
-    stud_course(sid=sid,cid=num).save()
-    sc = stud_course.objects.filter(sid=sid).only('cid')
-    return render(req,'entrol_course.html',{'msg':'Entrolled Successfully','sid':sid,'data':sc})
+    try:
+        stud_course.objects.get(sid=sid,cid=num)
+        messages.error(req,"Already Entrolled")
+        return redirect('entrol_course')
+    except stud_course.DoesNotExist:
+        stud_course(sid=sid, cid=num).save()
+        messages.success(req,"Entrolled Successfully")
+        return redirect('entrol_course')
 
 def view_entrolled_courses(req):
-    sid = req.GET.get('no')
-    ##sc = stud_course.objects.filter(sid=sid).only('cid')
-    sc = stud_course.objects.all()
-    coures = courseModel.objects.all()
-    return render(req,'view_entrolled_courses.html',{'data':sc,'course':coures,'sid':sid})
+    sid = req.GET.get('sid')
+    res = stud_course.objects.filter(sid=sid)
+    coures = [courseModel.objects.get(cid=x.cid) for x in res]
+    return render(req,'view_entrolled_courses.html',{'data':coures})
 
 def cancel_entrolled_courses(req):
-    sid = req.GET.get('no')
-    #sc = stud_course.objects.filter(sid=sid).only('cid')
-    sc = stud_course.objects.all()
-    coures = courseModel.objects.all()
-    return render(req, 'cancel_entrolled_courses.html', {'data': sc, 'course': coures,"sid":sid})
-
-def delete_course(req):
-    num = req.GET.get('del')
     sid = req.GET.get('sid')
-    stud_course.objects.filter(cid=num).delete()
-    sc = stud_course.objects.filter(sid=sid).only('cid')
-    #return render(req,'view_entrolled_courses.html',{'sid':sid,'data':sc})
-    return redirect('cancel_entrolled_courses')
+    sc = stud_course.objects.filter(sid=sid)
+    data =[courseModel.objects.get(cid=x.cid) for x in sc]
+    return render(req, 'cancel_entrolled_courses.html',{'data': data})
+
+def delete_course(request):
+    cno = request.POST.get('cno')
+    sid = request.POST.get('sid')
+    stud_course.objects.get(cid=cno, sid=sid).delete()
+    res = stud_course.objects.filter(sid=sid)
+    data = [stud_course.objects.get(cid=x.cid) for x in res]
+    return render(request, "cancel_entrolled_courses.html", {"data": data})
+
+#    cid = req.GET.get('del')
+#    sid = req.GET.get('sid')
+#    stud_course.objects.get(cid=cid,sid=sid).delete()
+#    res = stud_course.objects.filter(sid=sid)
+#    data = [courseModel.objects.get(cid=x.cid) for x in res]
+#    return render(req,'cancel_entrolled_courses.html',{'data':data})
+
+def student_logout(req):
+    del req.session['sid']
+    return redirect('student_login')

@@ -41,5 +41,6 @@ urlpatterns = [
     path('entrol/',views.entrol,name='entrol'),
     path('delete_course/',views.delete_course,name='delete_course'),
     path('contact/',views.contact,name='contact'),
+    path('student_logout/',views.student_logout,name='student_logout'),
 
 ]

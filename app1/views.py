@@ -6,6 +6,10 @@ from app1.courseForm import courseForms,studentForm
 from django.db.utils import IntegrityError
 from django.db.models import Q
 from django.contrib import messages
+from django.utils.decorators import method_decorator
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+
 
 def admin_login(req):
     return render(req, 'admin_login.html')
@@ -125,13 +129,38 @@ def delete_course(request):
     data = [stud_course.objects.get(cid=x.cid) for x in res]
     return render(request, "cancel_entrolled_courses.html", {"data": data})
 
-#    cid = req.GET.get('del')
-#    sid = req.GET.get('sid')
-#    stud_course.objects.get(cid=cid,sid=sid).delete()
-#    res = stud_course.objects.filter(sid=sid)
-#    data = [courseModel.objects.get(cid=x.cid) for x in res]
-#    return render(req,'cancel_entrolled_courses.html',{'data':data})
-
 def student_logout(req):
     del req.session['sid']
     return redirect('student_login')
+
+@method_decorator(csrf_exempt,name='dispatch')
+def check_number(request):
+    num = request.POST.get('data')
+    try:
+        studentModel.objects.get(Contact_Number=num)
+        json_data = {'error':'Contact Number is already taken'}
+    except studentModel.DoesNotExist:
+        json_data = {'message':'Available'}
+    return JsonResponse(json_data)
+
+@method_decorator(csrf_exempt,name='dispatch')
+def check_email(request):
+    email = request.POST.get('data')
+    print(email)
+    try:
+        studentModel.objects.get(email=email)
+        json_data = {'error':'Email is already taken'}
+    except studentModel.DoesNotExist:
+        json_data = {'message':'Available'}
+    return JsonResponse(json_data)
+
+@method_decorator(csrf_exempt,name='dispatch')
+def check_cname(request):
+    cname = request.POST.get('data')
+    print(cname)
+    try:
+        courseModel.objects.get(course_name=cname)
+        json_data = {'error':'Course is already registered'}
+    except courseModel.DoesNotExist:
+        json_data = {'message':'Available'}
+    return JsonResponse(json_data)

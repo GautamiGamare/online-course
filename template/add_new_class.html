@@ -1,15 +1,41 @@
 {% include 'admin_welcome.html' %}
 {% load static %}
 {% block course %}
+<script src="{% static 'js/ajax1.js' %}"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <form action="{% url 'save_course' %}" method="post">
 {% csrf_token %}
 <table class="table">
     <tr>
-        {{ form }}<span>{{ Error }}</span>
+        <th>
+            Course Name  :  {{ form.course_name }}
+        </th>
+        <th>
+            <span>{{ form.course_name.errors }}</span><span id="cn"></span>
+        </th>
     </tr>
-
+    <tr>
+        <th>Faculty Name  : {{ form.faculty_name }}</th>
+        <th><span>{{ form.faculty_name.errors }}</span></th>
+    </tr>
+    <tr>
+        <th>Starting data  : {{ form.starting_date }}</th>
+        <th><span>{{ form.starting_date.errors }}</span></th>
+    </tr>
+    <tr>
+        <th>Course Timing  : {{ form.course_time }}</th>
+        <th><span>{{ form.course_time.errors }}</span></th>
+    </tr>
+    <tr>
+        <th>Fee  : {{ form.fee }}</th>
+        <th><span>{{ form.fee.errors }}</span></th>
+    </tr>
+    <tr>
+        <th>Duration in days  : {{ form.Duration }}</th>
+        <th><span>{{ form.Duration.errors }}</span></th>
+    </tr>
 </table>
-<button type="submit" class="btn btn-primary">Register</button>
+<button type="submit" class="btn btn-primary" id="btn1">Register</button>
 </form>
 
 {% endblock %}

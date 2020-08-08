@@ -5,7 +5,7 @@ class courseModel(models.Model):
     course_name=models.CharField(max_length=10,unique=True)
     faculty_name=models.CharField(max_length=20)
     starting_date = models.DateField()
-    course_time = models.IntegerField()
+    course_time = models.TimeField(default=False)
     fee = models.IntegerField()
     Duration = models.IntegerField()
 

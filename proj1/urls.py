@@ -43,4 +43,7 @@ urlpatterns = [
     path('contact/',views.contact,name='contact'),
     path('student_logout/',views.student_logout,name='student_logout'),
 
+    path('check_number/',views.check_number,name='check_number'),
+    path('check_email/',views.check_email,name='check_email'),
+    path('check_cname/',views.check_cname,name="check_cname"),
 ]

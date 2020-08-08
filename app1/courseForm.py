@@ -4,6 +4,7 @@ import re
 
 class courseForms(forms.ModelForm):
     fee = forms.IntegerField(min_value=3000)
+    course_time = forms.TimeField()
     starting_date = forms.CharField(widget=forms.DateInput(attrs={'type': 'date'}), label="Starting Date")
 
     def clean_course_name(self):
@@ -35,17 +36,28 @@ class courseForms(forms.ModelForm):
     class Meta:
         fields = '__all__'
         model = courseModel
+        widgets = {
+            "course_name" : forms.TextInput(attrs={'id':'cname','onblur':"ajaxCheck('http://127.0.0.1:8000/check_cname/','cname','cn')"})
+        }
 
 class studentForm(forms.ModelForm):
+    def clean_Student_name(self):
+        name = self.cleaned_data['Student_name']
+        res = re.findall(r'^[A-Z a-z]*$', name)
+        if res:
+            return name
+        else:
+            print(forms.ValidationError)
+            raise forms.ValidationError("Invalid Name")
+
     class Meta:
         fields = ["Student_name","Contact_Number","Password","email"]
         model = studentModel
-
-#class stud_courseForm(forms.ModelForm):
- #   class Meta:
-  #      fields = ["Student_Course"]
-   #     model = studentModel,courseModel
-
-    #Student_Course = forms.CharField(widget=forms.)
+        widgets = {
+            'Student_name': forms.TextInput(attrs={'id': 'one'}),
+            'Contact_Number':forms.NumberInput(attrs={'id': 'two','onblur':"ajaxCheck('http://127.0.0.1:8000/check_number/','two','Two')"}),
+            'Password': forms.PasswordInput(attrs={'id':'three'}),
+            'email': forms.EmailInput(attrs={'id':'four','onblur':"ajaxCheck('http://127.0.0.1:8000/check_email/','four','email')"}),
+        }
 
 

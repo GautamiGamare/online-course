@@ -1,12 +1,18 @@
+{% load static %}
 {% include 'student.html' %}
 {% block student %}
+<script src="{% static 'js/ajax1.js' %}"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <form action="{% url 'save_student' %}" method="post">
 {% csrf_token %}
 <table class="table">
-{{ form }}
+<tr><th>Student Name : {{ form.Student_name }}</th><th><span id="one"></span><span>{{ form.Student_name.errors }}</span></th></tr>
+<tr><th>Contact Number : {{ form.Contact_Number }}</th><th><span id="Two"></span><span>{{ form.Contact_Number.errors }}</span></th></tr>
+<tr><th>Email ID : {{ form.email }}</th><th><span id="email"></span><span>{{ form.email.errors }}</span></th></tr>
+<tr><th>Password : {{ form.Password }}</th><th><span id="four"></span><span>{{ form.Password.errors }}</span></th></tr>
 </table>
     <center>
-<button type="submit" class="btn btn-primary" style="alignment: center">Register</button>
+<button type="submit" id="btn1" class="btn btn-primary" style="alignment: center">Register</button>
 </center>
 </form>
 
